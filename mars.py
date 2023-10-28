@@ -43,7 +43,7 @@ rp = 400e3+radius_of_mars
 # v_infinity = 3918.6075818730897
 delta_v, aiming_radius, angle_to_periapsis, eh, ep, h_hyperbola = em.approach_hyperbola(mu_mars, v_infinity, rp)
 print(eh)
-# print(ep)
+print(angle_to_periapsis*180/np.pi)
 print(delta_v)
 # print(h_hyperbola)
 
@@ -73,6 +73,42 @@ random_vector = [0,0,1]
 
 r = np.cross(r0_mars, random_vector)
 r0 = r0_mars + aiming_radius*r
+
+
+vx = v0[0]
+vy = v0[1]
+
+raan_h = np.arctan2(vy,vx)
+print(raan_h*180/np.pi)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # h1, i1, raan1, e1, argp1, theta1 = op.calculate_orbital_parameters(r0, v0, mu_mars) 
