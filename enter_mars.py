@@ -211,28 +211,31 @@ def b_plane_targeting(r0, v0, mu):
 # https://archive.org/details/explanatorysuppl00pken/page/556/mode/2up
 
 
-def rodrigues_rotation_matrix(u, n, alpha):
-    v = (1-np.cos(alpha))*np.dot(u,n)*n+np.cos(alpha)*u-np.sin(alpha)*np.cross(n,u)
-    return v
+# def rodrigues_rotation_matrix(u, n, alpha):
+#     v = (1-np.cos(alpha))*np.dot(u,n)*n+np.cos(alpha)*u-np.sin(alpha)*np.cross(n,u)
+#     return v
 
-def calculate_argp(v, beta, v0):
+def calculate_argp(beta, v0):
     vx = v0[0]
     vy = v0[1]
     angle = np.arctan2(vy,vx)
+    v0_u = v0/np.linalg.norm(v0)
+    x = [1,0,0]
     
-    x = [1,0]
-    
-    p1 = [np.cos(angle),-np.sin(angle)]
-    p2 = [np.sin(angle),np.cos(angle)]
-    rotation_matrix = np.array([p1,p2])
+    p1 = [np.cos(angle),-np.sin(angle),0]
+    p2 = [np.sin(angle),np.cos(angle),0]
+    p3 = [0,0,0]
+    rotation_matrix = np.array([p1,p2,p3])
 
     N_vector = np.matmul(x, rotation_matrix)
-    r1 = [np.cos(beta),-np.sin(beta)]
-    r2 = [np.sin(beta),np.cos(beta)]
-    rotation_matrix1 = np.array([r1,r2])
-    e_vector = np.matmul(v,rotation_matrix1)
+    
+    r1 = [np.cos(beta),np.sin(beta),0]
+    r2 = [-np.sin(beta),np.cos(beta),0]
+    r3 = [0,0,1]
+    rotation_matrix1 = np.array([r1,r2,r3])
+    e_vector = np.matmul(v0_u,rotation_matrix1)
     e_unit_vector = e_vector/np.linalg.norm(e_vector)
 
     N_unit_vector = N_vector/np.linalg.norm(N_vector)
     argp = np.arccos(np.dot(N_unit_vector,e_unit_vector)) #magnitude of vectors being used are 1
-    return argp
+    return argp, e_vector

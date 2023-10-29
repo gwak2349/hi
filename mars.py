@@ -83,6 +83,15 @@ print(raan_h*180/np.pi)
 
 
 
+argp_h, e_vector = em.calculate_argp(angle_to_periapsis,v0)
+print(argp_h*180/np.pi)
+
+i_h = 23.34*np.pi/180
+a_h = h_hyperbola**2/mu_mars*1/(eh**2-1)
+true_anomaly = aot.compute_ta_hyp(a_h,eh,rp)
+x = (a_h*(1-eh**2) - rp)/(eh*rp)
+print(x)
+print(true_anomaly*180/np.pi)
 
 
 
